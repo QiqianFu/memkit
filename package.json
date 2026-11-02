@@ -1,0 +1,24 @@
+{
+  "name": "memkit",
+  "version": "0.1.0",
+  "description": "OpenClaw memory plugin: Jev-judged retrieval, DeepSeek-written memory files.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "eval:gold": "node scripts/eval_gold.ts"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.10.7"
+  },
+  "openclaw": {
+    "extensions": ["./index.ts"],
+    "compat": {
+      "pluginApi": ">=2026.10.7",
+      "minGatewayVersion": "2026.10.7"
+    }
+  }
+}

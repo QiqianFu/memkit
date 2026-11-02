@@ -1,0 +1,87 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "<state dir>/workspace",
+      "model": {
+        "primary": "deepseek/deepseek-flash"
+      },
+      "models": {
+        "deepseek/deepseek-flash": {}
+      },
+      "thinkingDefault": "low",
+      "modelPolicy": {
+        "allow": [
+          "deepseek/deepseek-flash"
+        ]
+      },
+      "userTimezone": "Asia/Shanghai"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "port": 18799,
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "<generate: python3 -c \"import secrets;print(secrets.token_hex(24))\">"
+    },
+    "http": {
+      "endpoints": {
+        "chatCompletions": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "tools": {
+    "profile": "minimal",
+    "deny": [
+      "*"
+    ],
+    "codeMode": false,
+    "toolSearch": false
+  },
+  "plugins": {
+    "load": {
+      "paths": [
+        "/path/to/deepseek-provider-plugin",
+        "/path/to/memkit"
+      ]
+    },
+    "entries": {
+      "deepseek": {
+        "enabled": true
+      },
+      "memory-core": {
+        "enabled": false
+      },
+      "memkit": {
+        "enabled": true,
+        "hooks": {
+          "allowConversationAccess": true,
+          "timeouts": {
+            "before_prompt_build": 30000,
+            "agent_end": 60000
+          }
+        },
+        "config": {
+          "recallTimeoutMs": 25000,
+          "captureTimeoutMs": 50000,
+          "mainAgent": "answer-only",
+          "persona": {
+            "file": "/path/to/memkit/personas/yuzuha/card.md",
+            "vars": {
+              "player_name": "哲",
+              "sibling": "和妹妹铃一起开店"
+            },
+            "rules": "auto"
+          }
+        }
+      }
+    },
+    "slots": {
+      "memory": "memkit",
+      "contextEngine": "memkit"
+    }
+  }
+}

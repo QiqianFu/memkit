@@ -1,0 +1,19 @@
+# Secrets — never commit (templates are fine)
+.env
+.env.*
+!.env.example
+
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+*.log
+.DS_Store
+
+# offline eval outputs, local chat/probe logs
+runs/
+personas/*/eval/runs/
+
+# rebuilt locally from game data (copyrighted text; see personas/yuzuha/tools/README.md)
+personas/*/corpus/
+personas/*/raw/

@@ -1,0 +1,119 @@
+{
+  "id": "memkit",
+  "name": "memkit",
+  "description": "Long-term memory: BGE-M3 recall, Jev-judged file by file, and DeepSeek-written memory files (ingest / retrieve / answer).",
+  "kind": ["memory", "context-engine"],
+  "categories": ["memory"],
+  "activation": {
+    "onStartup": true
+  },
+  "contracts": {
+    "tools": []
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "rootDir": { "type": "string" },
+      "llm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "baseUrl": { "type": "string" },
+          "apiKey": { "type": "string" },
+          "model": { "type": "string" },
+          "timeoutMs": { "type": "number" },
+          "reasoningEffort": { "type": "string" }
+        }
+      },
+      "judge": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "backend": { "type": "string", "enum": ["auto", "jev", "llm"] },
+          "baseUrl": { "type": "string" },
+          "apiKey": { "type": "string" },
+          "model": { "type": "string" },
+          "timeoutMs": { "type": "number" }
+        }
+      },
+      "embed": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "baseUrl": { "type": "string" },
+          "apiKey": { "type": "string" },
+          "apiKeyFile": { "type": "string" },
+          "model": { "type": "string" },
+          "timeoutMs": { "type": "number" },
+          "maxChars": { "type": "number" }
+        }
+      },
+      "retrieve": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "recallGate": { "type": "boolean" },
+          "recallAt": { "type": "number" },
+          "timeAware": { "type": "boolean" },
+          "timeAt": { "type": "number" },
+          "timeFiles": { "type": "number" },
+          "queryRewrite": { "type": "boolean" },
+          "recall": { "type": "number" },
+          "halfLifeDays": { "type": "number" },
+          "k": { "type": "number" },
+          "minScore": { "type": "number" },
+          "historyChars": { "type": "number" },
+          "queryChars": { "type": "number" },
+          "messageChars": { "type": "number" },
+          "fileChars": { "type": "number" },
+          "evidenceChars": { "type": "number" },
+          "retrieval": { "type": "string", "enum": ["judge", "bm25"] }
+        }
+      },
+      "ingest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "gateAt": { "type": "number" },
+          "ingestCandidates": { "type": "number" },
+          "extraCandidates": { "type": "number" },
+          "relatedAt": { "type": "number" },
+          "writeFiles": { "type": "number" },
+          "topicShiftAt": { "type": "number" },
+          "segmentChars": { "type": "number" },
+          "maxAttempts": { "type": "integer", "minimum": 1 },
+          "tailTurns": { "type": "number" },
+          "jevChars": { "type": "number" }
+        }
+      },
+      "mainAgent": { "type": "string", "enum": ["answer-only", "host"] },
+      "answerPrompt": { "type": "string" },
+      "persona": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": "string" },
+          "rules": { "type": "string", "enum": ["auto", "roleplay", "assistant"] },
+          "monologue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "strip": { "type": "string", "enum": ["auto", "always", "never"] },
+              "open": { "type": "string" },
+              "close": { "type": "string" }
+            }
+          },
+          "vars": { "type": "object", "additionalProperties": { "type": "string" } }
+        }
+      },
+      "autoRecall": { "type": "boolean" },
+      "autoCapture": { "type": "boolean" },
+      "recallTimeoutMs": { "type": "number" },
+      "captureTimeoutMs": { "type": "number" },
+      "idleFlushMinutes": { "type": "number", "minimum": 0 },
+      "trace": { "type": "boolean" }
+    }
+  }
+}
